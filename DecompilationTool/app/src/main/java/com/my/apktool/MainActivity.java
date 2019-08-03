@@ -2,6 +2,7 @@ package com.my.apktool;
 
 import android.app.*;
 import android.os.*;
+import android.widget.*;
 
 public class MainActivity extends Activity 
 {
@@ -10,5 +11,7 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+		
+		Toast.makeText(MainActivity.this,"666",3000).show();
     }
 }
