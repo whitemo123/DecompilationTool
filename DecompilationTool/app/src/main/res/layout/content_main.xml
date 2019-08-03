@@ -21,9 +21,10 @@
 			<LinearLayout
 				android:orientation="horizontal"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+				android:layout_height="100dp"
 				android:paddingTop="16dp"
-				android:paddingLeft="16dp">
+				android:paddingLeft="16dp"
+				android:background="@drawable/gradual_blur">
 
 				<ImageView
 					android:layout_width="80dp"
@@ -41,12 +42,15 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="APKTOOL"
-						android:textSize="20sp"/>
+						android:textSize="20sp"
+						android:textColor="#FFFFFF"
+						android:textStyle="bold"/>
 
 					<TextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="1.0.0"/>
+						android:text="1.0.0"
+						android:textColor="#F6F6F6"/>
 
 				</LinearLayout>
 
@@ -66,9 +70,10 @@
 
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_height="50dp"
 					android:text="功能菜单"
-					android:textSize="18sp"/>
+					android:textSize="18sp"
+					android:gravity="center_vertical"/>
 
 				<Button
 					android:layout_width="match_parent"
