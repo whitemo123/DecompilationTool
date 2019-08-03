@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity
 	DrawerLayout drawerLayout;
 	NavigationView navigationView;
 	
-	
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

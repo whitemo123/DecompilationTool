@@ -439,6 +439,61 @@ containing a value of this type.
 </table>
          */
         public static final int buttonTintMode=0x7f0100a0;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cardBackgroundColor=0x7f01013a;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cardCornerRadius=0x7f01013b;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cardElevation=0x7f01013c;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cardMaxElevation=0x7f01013d;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cardPreventCornerOverlap=0x7f01013f;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cardUseCompatPadding=0x7f01013e;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
@@ -644,6 +699,56 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int contentInsetStartWithNavigation=0x7f01001a;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int contentPadding=0x7f010140;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int contentPaddingBottom=0x7f010144;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int contentPaddingLeft=0x7f010141;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int contentPaddingRight=0x7f010142;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int contentPaddingTop=0x7f010143;
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
 <p>This may also be a reference to a resource (in the form
@@ -2306,31 +2411,31 @@ containing a value of this type.
         public static final int abc_config_showMenuShortcutsWhenKeyboardPresent=0x7f0a0004;
     }
     public static final class color {
-        public static final int abc_background_cache_hint_selector_material_dark=0x7f0b0049;
-        public static final int abc_background_cache_hint_selector_material_light=0x7f0b004a;
-        public static final int abc_btn_colored_borderless_text_material=0x7f0b004b;
-        public static final int abc_btn_colored_text_material=0x7f0b004c;
-        public static final int abc_color_highlight_material=0x7f0b004d;
-        public static final int abc_hint_foreground_material_dark=0x7f0b004e;
-        public static final int abc_hint_foreground_material_light=0x7f0b004f;
+        public static final int abc_background_cache_hint_selector_material_dark=0x7f0b0057;
+        public static final int abc_background_cache_hint_selector_material_light=0x7f0b0058;
+        public static final int abc_btn_colored_borderless_text_material=0x7f0b0059;
+        public static final int abc_btn_colored_text_material=0x7f0b005a;
+        public static final int abc_color_highlight_material=0x7f0b005b;
+        public static final int abc_hint_foreground_material_dark=0x7f0b005c;
+        public static final int abc_hint_foreground_material_light=0x7f0b005d;
         public static final int abc_input_method_navigation_guard=0x7f0b0001;
-        public static final int abc_primary_text_disable_only_material_dark=0x7f0b0050;
-        public static final int abc_primary_text_disable_only_material_light=0x7f0b0051;
-        public static final int abc_primary_text_material_dark=0x7f0b0052;
-        public static final int abc_primary_text_material_light=0x7f0b0053;
-        public static final int abc_search_url_text=0x7f0b0054;
+        public static final int abc_primary_text_disable_only_material_dark=0x7f0b005e;
+        public static final int abc_primary_text_disable_only_material_light=0x7f0b005f;
+        public static final int abc_primary_text_material_dark=0x7f0b0060;
+        public static final int abc_primary_text_material_light=0x7f0b0061;
+        public static final int abc_search_url_text=0x7f0b0062;
         public static final int abc_search_url_text_normal=0x7f0b0002;
         public static final int abc_search_url_text_pressed=0x7f0b0003;
         public static final int abc_search_url_text_selected=0x7f0b0004;
-        public static final int abc_secondary_text_material_dark=0x7f0b0055;
-        public static final int abc_secondary_text_material_light=0x7f0b0056;
-        public static final int abc_tint_btn_checkable=0x7f0b0057;
-        public static final int abc_tint_default=0x7f0b0058;
-        public static final int abc_tint_edittext=0x7f0b0059;
-        public static final int abc_tint_seek_thumb=0x7f0b005a;
-        public static final int abc_tint_spinner=0x7f0b005b;
-        public static final int abc_tint_switch_thumb=0x7f0b005c;
-        public static final int abc_tint_switch_track=0x7f0b005d;
+        public static final int abc_secondary_text_material_dark=0x7f0b0063;
+        public static final int abc_secondary_text_material_light=0x7f0b0064;
+        public static final int abc_tint_btn_checkable=0x7f0b0065;
+        public static final int abc_tint_default=0x7f0b0066;
+        public static final int abc_tint_edittext=0x7f0b0067;
+        public static final int abc_tint_seek_thumb=0x7f0b0068;
+        public static final int abc_tint_spinner=0x7f0b0069;
+        public static final int abc_tint_switch_thumb=0x7f0b006a;
+        public static final int abc_tint_switch_track=0x7f0b006b;
         public static final int accent_material_dark=0x7f0b0005;
         public static final int accent_material_light=0x7f0b0006;
         public static final int background_floating_material_dark=0x7f0b0007;
@@ -2345,11 +2450,25 @@ containing a value of this type.
         public static final int bright_foreground_material_light=0x7f0b0010;
         public static final int button_material_dark=0x7f0b0011;
         public static final int button_material_light=0x7f0b0012;
-        public static final int colorAccent=0x7f0b0048;
-        public static final int colorPrimary=0x7f0b0046;
-        public static final int colorPrimaryDark=0x7f0b0047;
+        public static final int cardview_dark_background=0x7f0b0046;
+        public static final int cardview_light_background=0x7f0b0047;
+        public static final int cardview_shadow_end_color=0x7f0b0048;
+        public static final int cardview_shadow_start_color=0x7f0b0049;
+        public static final int colorAccent=0x7f0b004c;
+        public static final int colorPrimary=0x7f0b004a;
+        public static final int colorPrimaryDark=0x7f0b004b;
+        public static final int color_gradient_1=0x7f0b004d;
+        public static final int color_gradient_2=0x7f0b004e;
+        public static final int color_gradient_3=0x7f0b004f;
+        public static final int color_gradient_4=0x7f0b0050;
+        public static final int color_gradient_5=0x7f0b0051;
+        public static final int color_gradient_6=0x7f0b0052;
+        public static final int color_gradient_7=0x7f0b0053;
+        public static final int color_gradient_8=0x7f0b0054;
+        public static final int color_gradient_9=0x7f0b0055;
+        public static final int color_gradient_X=0x7f0b0056;
         public static final int design_bottom_navigation_shadow_color=0x7f0b003b;
-        public static final int design_error=0x7f0b005e;
+        public static final int design_error=0x7f0b006c;
         public static final int design_fab_shadow_end_color=0x7f0b003c;
         public static final int design_fab_shadow_mid_color=0x7f0b003d;
         public static final int design_fab_shadow_start_color=0x7f0b003e;
@@ -2360,7 +2479,7 @@ containing a value of this type.
         public static final int design_snackbar_background_color=0x7f0b0043;
         public static final int design_textinput_error_color_dark=0x7f0b0044;
         public static final int design_textinput_error_color_light=0x7f0b0045;
-        public static final int design_tint_password_toggle=0x7f0b005f;
+        public static final int design_tint_password_toggle=0x7f0b006d;
         public static final int dim_foreground_disabled_material_dark=0x7f0b0013;
         public static final int dim_foreground_disabled_material_light=0x7f0b0014;
         public static final int dim_foreground_material_dark=0x7f0b0015;
@@ -2400,8 +2519,8 @@ containing a value of this type.
         public static final int secondary_text_disabled_material_light=0x7f0b0036;
         public static final int switch_thumb_disabled_material_dark=0x7f0b0037;
         public static final int switch_thumb_disabled_material_light=0x7f0b0038;
-        public static final int switch_thumb_material_dark=0x7f0b0060;
-        public static final int switch_thumb_material_light=0x7f0b0061;
+        public static final int switch_thumb_material_dark=0x7f0b006e;
+        public static final int switch_thumb_material_light=0x7f0b006f;
         public static final int switch_thumb_normal_material_dark=0x7f0b0039;
         public static final int switch_thumb_normal_material_light=0x7f0b003a;
     }
@@ -2480,6 +2599,9 @@ containing a value of this type.
         public static final int abc_text_size_subtitle_material_toolbar=0x7f080003;
         public static final int abc_text_size_title_material=0x7f08004d;
         public static final int abc_text_size_title_material_toolbar=0x7f080004;
+        public static final int cardview_compat_inset_shadow=0x7f08008b;
+        public static final int cardview_default_elevation=0x7f08008c;
+        public static final int cardview_default_radius=0x7f08008d;
         public static final int design_appbar_elevation=0x7f08006a;
         public static final int design_bottom_navigation_active_item_max_width=0x7f08006b;
         public static final int design_bottom_navigation_active_text_size=0x7f08006c;
@@ -2949,14 +3071,15 @@ containing a value of this type.
         public static final int Animation_AppCompat_Dialog=0x7f0900a1;
         public static final int Animation_AppCompat_DropDownUp=0x7f0900a2;
         public static final int Animation_Design_BottomSheetDialog=0x7f090161;
-        public static final int AppTheme=0x7f09017a;
-        public static final int AppTheme_AppBarOverlay=0x7f09017c;
-        public static final int AppTheme_NoActionBar=0x7f09017b;
-        public static final int AppTheme_PopupOverlay=0x7f09017d;
+        public static final int AppTheme=0x7f09017e;
+        public static final int AppTheme_AppBarOverlay=0x7f090180;
+        public static final int AppTheme_NoActionBar=0x7f09017f;
+        public static final int AppTheme_PopupOverlay=0x7f090181;
         public static final int Base_AlertDialog_AppCompat=0x7f0900a3;
         public static final int Base_AlertDialog_AppCompat_Light=0x7f0900a4;
         public static final int Base_Animation_AppCompat_Dialog=0x7f0900a5;
         public static final int Base_Animation_AppCompat_DropDownUp=0x7f0900a6;
+        public static final int Base_CardView=0x7f09017b;
         public static final int Base_DialogWindowTitle_AppCompat=0x7f0900a7;
         public static final int Base_DialogWindowTitleBackground_AppCompat=0x7f0900a8;
         public static final int Base_TextAppearance_AppCompat=0x7f09003f;
@@ -3107,6 +3230,9 @@ containing a value of this type.
         public static final int Base_Widget_AppCompat_Toolbar_Button_Navigation=0x7f090084;
         public static final int Base_Widget_Design_AppBarLayout=0x7f090162;
         public static final int Base_Widget_Design_TabLayout=0x7f090163;
+        public static final int CardView=0x7f09017a;
+        public static final int CardView_Dark=0x7f09017c;
+        public static final int CardView_Light=0x7f09017d;
         public static final int Platform_AppCompat=0x7f09001e;
         public static final int Platform_AppCompat_Light=0x7f09001f;
         public static final int Platform_ThemeOverlay_AppCompat=0x7f090085;
@@ -6187,6 +6313,229 @@ containing a value of this type.
           @attr name com.my.apktool:allowStacking
         */
         public static final int ButtonBarLayout_allowStacking = 0;
+        /** Attributes that can be used with a CardView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #CardView_android_minHeight android:minHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_android_minWidth android:minWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_cardBackgroundColor com.my.apktool:cardBackgroundColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_cardCornerRadius com.my.apktool:cardCornerRadius}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_cardElevation com.my.apktool:cardElevation}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_cardMaxElevation com.my.apktool:cardMaxElevation}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_cardPreventCornerOverlap com.my.apktool:cardPreventCornerOverlap}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_cardUseCompatPadding com.my.apktool:cardUseCompatPadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_contentPadding com.my.apktool:contentPadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_contentPaddingBottom com.my.apktool:contentPaddingBottom}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_contentPaddingLeft com.my.apktool:contentPaddingLeft}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_contentPaddingRight com.my.apktool:contentPaddingRight}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_contentPaddingTop com.my.apktool:contentPaddingTop}</code></td><td></td></tr>
+           </table>
+           @see #CardView_android_minHeight
+           @see #CardView_android_minWidth
+           @see #CardView_cardBackgroundColor
+           @see #CardView_cardCornerRadius
+           @see #CardView_cardElevation
+           @see #CardView_cardMaxElevation
+           @see #CardView_cardPreventCornerOverlap
+           @see #CardView_cardUseCompatPadding
+           @see #CardView_contentPadding
+           @see #CardView_contentPaddingBottom
+           @see #CardView_contentPaddingLeft
+           @see #CardView_contentPaddingRight
+           @see #CardView_contentPaddingTop
+         */
+        public static final int[] CardView = {
+            0x0101013f, 0x01010140, 0x7f01013a, 0x7f01013b,
+            0x7f01013c, 0x7f01013d, 0x7f01013e, 0x7f01013f,
+            0x7f010140, 0x7f010141, 0x7f010142, 0x7f010143,
+            0x7f010144
+        };
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#minHeight}
+          attribute's value can be found in the {@link #CardView} array.
+          @attr name android:minHeight
+        */
+        public static final int CardView_android_minHeight = 1;
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#minWidth}
+          attribute's value can be found in the {@link #CardView} array.
+          @attr name android:minWidth
+        */
+        public static final int CardView_android_minWidth = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.my.apktool.R.attr#cardBackgroundColor}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.my.apktool:cardBackgroundColor
+        */
+        public static final int CardView_cardBackgroundColor = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.my.apktool.R.attr#cardCornerRadius}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.my.apktool:cardCornerRadius
+        */
+        public static final int CardView_cardCornerRadius = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.my.apktool.R.attr#cardElevation}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.my.apktool:cardElevation
+        */
+        public static final int CardView_cardElevation = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.my.apktool.R.attr#cardMaxElevation}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.my.apktool:cardMaxElevation
+        */
+        public static final int CardView_cardMaxElevation = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.my.apktool.R.attr#cardPreventCornerOverlap}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.my.apktool:cardPreventCornerOverlap
+        */
+        public static final int CardView_cardPreventCornerOverlap = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.my.apktool.R.attr#cardUseCompatPadding}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.my.apktool:cardUseCompatPadding
+        */
+        public static final int CardView_cardUseCompatPadding = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.my.apktool.R.attr#contentPadding}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.my.apktool:contentPadding
+        */
+        public static final int CardView_contentPadding = 8;
+        /**
+          <p>This symbol is the offset where the {@link com.my.apktool.R.attr#contentPaddingBottom}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.my.apktool:contentPaddingBottom
+        */
+        public static final int CardView_contentPaddingBottom = 12;
+        /**
+          <p>This symbol is the offset where the {@link com.my.apktool.R.attr#contentPaddingLeft}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.my.apktool:contentPaddingLeft
+        */
+        public static final int CardView_contentPaddingLeft = 9;
+        /**
+          <p>This symbol is the offset where the {@link com.my.apktool.R.attr#contentPaddingRight}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.my.apktool:contentPaddingRight
+        */
+        public static final int CardView_contentPaddingRight = 10;
+        /**
+          <p>This symbol is the offset where the {@link com.my.apktool.R.attr#contentPaddingTop}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.my.apktool:contentPaddingTop
+        */
+        public static final int CardView_contentPaddingTop = 11;
         /** Attributes that can be used with a CollapsingToolbarLayout.
            <p>Includes the following attributes:</p>
            <table>
