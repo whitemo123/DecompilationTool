@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">DecompilationTool</string>
-    <string name="hello_world">Hello world!</string>
-
+    <string name="app_name">反编译助手</string>
+	<string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+	<string name="mains_refresh">刷新</string>
+	<string name="side_phone_storage">手机存储</string>
+	<string name="side_sd_storage">外部存储</string>
+    
 </resources>

@@ -1,0 +1,36 @@
+<menu 
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<group android:checkableBehavior="single">
+
+		<item
+			android:id="@+id/item1"
+			android:icon="@drawable/android"
+			android:title="@string/side_phone_storage"/>
+
+		<item
+			android:id="@+id/item2"
+			android:icon="@drawable/android"
+			android:title="@string/side_sd_storage"/>
+
+	</group>
+
+	<item android:title="More">
+
+		<menu>
+
+			<item
+				android:id="@+id/item1"
+				android:icon="@drawable/android"
+				android:title="..."/>
+
+			<item
+				android:id="@+id/item2"
+				android:icon="@drawable/android"
+				android:title="..."/>
+
+		</menu>
+
+	</item>
+
+</menu>
