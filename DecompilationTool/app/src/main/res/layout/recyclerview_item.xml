@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="80dp"
+		android:orientation="horizontal">
+
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_weight="1.2"
+			android:gravity="center">
+
+			<ImageView
+				android:layout_width="45dp"
+				android:layout_height="45dp"
+				android:id="@+id/file_image"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_weight="1.0"
+			android:gravity="center_vertical">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/file_name"
+				android:textColor="#000000"
+				android:textStyle="bold"
+				android:textSize="16sp"/>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:id="@+id/file_time"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_weight="1.0"
+			android:gravity="right|center_vertical">
+
+			<ImageView
+				android:layout_width="26dp"
+				android:layout_height="16dp"
+				android:layout_marginRight="16dp"
+				android:background="@drawable/drag_icon"
+				android:id="@+id/file_items"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<View
+		android:background="?android:attr/dividerVertical"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"/>
+
+</LinearLayout>
+

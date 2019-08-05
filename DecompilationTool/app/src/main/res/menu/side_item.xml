@@ -4,14 +4,19 @@
 	<group android:checkableBehavior="single">
 
 		<item
-			android:id="@+id/item1"
-			android:icon="@drawable/android"
+			android:id="@+id/side_phone_storage"
+			android:icon="@drawable/shouji"
 			android:title="@string/side_phone_storage"/>
 
 		<item
-			android:id="@+id/item2"
-			android:icon="@drawable/android"
+			android:id="@+id/side_sd_storage"
+			android:icon="@drawable/sd"
 			android:title="@string/side_sd_storage"/>
+		
+		<item
+			android:id="@+id/historical_project"
+			android:icon="@drawable/lishi"
+			android:title="@string/historical_project"/>
 
 	</group>
 
