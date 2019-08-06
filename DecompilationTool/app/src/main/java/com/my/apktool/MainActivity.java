@@ -85,7 +85,23 @@ public class MainActivity extends AppCompatActivity
 				public boolean onNavigationItemSelected(MenuItem p1)
 				{
 					// TODO: Implement this method
-					return false;
+					switch(p1.getItemId())
+					{
+						case R.id.side_phone_storage:
+							//跳转去手机存储
+							break;
+							
+						case R.id.side_sd_storage:
+							//跳转外部存储
+							break;
+							
+						case R.id.historical_project:
+							//历史项目:
+							break;
+							
+						default:break;
+					}
+					return true;
 				}
 				});
 	}
@@ -104,5 +120,24 @@ public class MainActivity extends AppCompatActivity
 		// TODO: Implement this method
 		
 		return true;
+	}
+
+	long exitTime = 0;
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)
+	{
+		// TODO: Implement this method
+		if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN)
+		{
+			if(System.currentTimeMillis()-exitTime <2000)
+				System.exit(0);
+			else
+			{
+				Toast.makeText(MainActivity.this,"再按一次退出！",3000).show();
+				exitTime = System.currentTimeMillis();
+			}
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }
