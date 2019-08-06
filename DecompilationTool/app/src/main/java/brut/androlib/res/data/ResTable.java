@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,7 +14,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.data;
 
 import brut.androlib.AndrolibException;
@@ -39,6 +39,7 @@ public class ResTable {
     private int mPackageId;
     private boolean mAnalysisMode = false;
     private boolean mSharedLibrary = false;
+    private boolean mSparseResources = false;
 
     private Map<String, String> mSdkInfo = new LinkedHashMap<>();
     private VersionInfo mVersionInfo = new VersionInfo();
@@ -80,7 +81,7 @@ public class ResTable {
             return pkg;
         }
         if (mAndRes != null) {
-             return mAndRes.loadFrameworkPkg(this, id, mAndRes.apkOptions.frameworkTag);
+            return mAndRes.loadFrameworkPkg(this, id, mAndRes.apkOptions.frameworkTag);
         }
         throw new UndefinedResObject(String.format("package: id=%d", id));
     }
@@ -170,6 +171,10 @@ public class ResTable {
         mSharedLibrary = flag;
     }
 
+    public void setSparseResources(boolean flag) {
+        mSparseResources = flag;
+    }
+
     public void clearSdkInfo() {
         mSdkInfo.clear();
     }
@@ -212,5 +217,9 @@ public class ResTable {
 
     public boolean getSharedLibrary() {
         return mSharedLibrary;
+    }
+
+    public boolean getSparseResources() {
+        return mSparseResources;
     }
 }

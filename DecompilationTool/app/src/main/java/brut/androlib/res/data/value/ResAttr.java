@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,7 +14,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.data.value;
 
 import brut.androlib.AndrolibException;
@@ -21,6 +21,7 @@ import brut.androlib.res.data.ResPackage;
 import brut.androlib.res.data.ResResource;
 import brut.androlib.res.xml.ResValuesXmlSerializable;
 import brut.util.Duo;
+import brut.util.Logger;
 import java.io.IOException;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -29,8 +30,8 @@ import org.xmlpull.v1.XmlSerializer;
  */
 public class ResAttr extends ResBagValue implements ResValuesXmlSerializable {
     ResAttr(ResReferenceValue parentVal, int type, Integer min, Integer max,
-            Boolean l10n) {
-        super(parentVal);
+            Boolean l10n, Logger logger) {
+        super(parentVal, logger);
         mType = type;
         mMin = min;
         mMax = max;
@@ -38,7 +39,7 @@ public class ResAttr extends ResBagValue implements ResValuesXmlSerializable {
     }
 
     public String convertToResXmlFormat(ResScalarValue value)
-            throws AndrolibException {
+	throws AndrolibException {
         return null;
     }
 
@@ -67,7 +68,7 @@ public class ResAttr extends ResBagValue implements ResValuesXmlSerializable {
 
     public static ResAttr factory(ResReferenceValue parent,
                                   Duo<Integer, ResScalarValue>[] items, ResValueFactory factory,
-                                  ResPackage pkg) throws AndrolibException {
+                                  ResPackage pkg, Logger logger) throws AndrolibException {
 
         int type = ((ResIntValue) items[0].m2).getValue();
         int scalarType = type & 0xffff;
@@ -90,32 +91,32 @@ public class ResAttr extends ResBagValue implements ResValuesXmlSerializable {
         }
 
         if (i == items.length) {
-            return new ResAttr(parent, scalarType, min, max, l10n);
+            return new ResAttr(parent, scalarType, min, max, l10n, logger);
         }
         Duo<ResReferenceValue, ResIntValue>[] attrItems = new Duo[items.length
-                - i];
+			- i];
         int j = 0;
         for (; i < items.length; i++) {
             int resId = items[i].m1;
             pkg.addSynthesizedRes(resId);
             attrItems[j++] = new Duo<ResReferenceValue, ResIntValue>(
-                    factory.newReference(resId, null),
-                    (ResIntValue) items[i].m2);
+				factory.newReference(resId, null),
+				(ResIntValue) items[i].m2);
         }
         switch (type & 0xff0000) {
             case TYPE_ENUM:
                 return new ResEnumAttr(parent, scalarType, min, max, l10n,
-                        attrItems);
+									   attrItems, logger);
             case TYPE_FLAGS:
                 return new ResFlagsAttr(parent, scalarType, min, max, l10n,
-                        attrItems);
+										attrItems, logger);
         }
 
         throw new AndrolibException("Could not decode attr value");
     }
 
     protected void serializeBody(XmlSerializer serializer, ResResource res)
-            throws AndrolibException, IOException {
+	throws AndrolibException, IOException {
     }
 
     protected String getTypeAsString() {

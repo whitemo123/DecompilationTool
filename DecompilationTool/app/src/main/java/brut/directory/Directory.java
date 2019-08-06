@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,7 +14,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.directory;
 
 import java.io.*;
@@ -47,8 +47,15 @@ public interface Directory {
     public void copyToDir(File out, String fileName)
         throws DirectoryException;
 
+    public long getSize(String fileName)
+            throws DirectoryException;
+    public long getCompressedSize(String fileName)
+            throws DirectoryException;
     public int getCompressionLevel(String fileName)
             throws DirectoryException;
 
+
+    public void close() throws IOException;
+    
     public final char separator = '/';
 }

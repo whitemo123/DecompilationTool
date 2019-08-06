@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,12 +14,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.data.value;
 
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResResource;
 import brut.util.Duo;
+import brut.util.Logger;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +30,8 @@ import org.xmlpull.v1.XmlSerializer;
  */
 public class ResEnumAttr extends ResAttr {
     ResEnumAttr(ResReferenceValue parent, int type, Integer min, Integer max,
-                Boolean l10n, Duo<ResReferenceValue, ResIntValue>[] items) {
-        super(parent, type, min, max, l10n);
+                Boolean l10n, Duo<ResReferenceValue, ResIntValue>[] items,Logger logger) {
+        super(parent, type, min, max, l10n,logger);
         mItems = items;
     }
 

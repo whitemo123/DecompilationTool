@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,104 +14,71 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.data.value;
 
-import FormatFa.ApktoolHelper.*;
-import brut.androlib.*;
-import brut.androlib.res.data.*;
-import brut.androlib.res.xml.*;
-import brut.util.*;
-import java.io.*;
-import org.xmlpull.v1.*;
+import brut.androlib.AndrolibException;
+import brut.androlib.res.data.ResResSpec;
+import brut.androlib.res.data.ResResource;
+import brut.androlib.res.xml.ResValuesXmlSerializable;
+import brut.util.Duo;
+import brut.util.Logger;
+import com.my.apktool.R;
+import java.io.IOException;
+import org.xmlpull.v1.XmlSerializer;
 
 /**
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public class ResStyleValue extends ResBagValue implements
-        ResValuesXmlSerializable {
+ResValuesXmlSerializable {
     ResStyleValue(ResReferenceValue parent,
-                  Duo<Integer, ResScalarValue>[] items, ResValueFactory factory) {
-        super(parent);
-
+                  Duo<Integer, ResScalarValue>[] items, ResValueFactory factory, Logger logger) {
+        super(parent, logger);
+		LOGGER = logger;
         mItems = new Duo[items.length];
         for (int i = 0; i < items.length; i++) {
             mItems[i] = new Duo<ResReferenceValue, ResScalarValue>(
-                    factory.newReference(items[i].m1, null), items[i].m2);
+				factory.newReference(items[i].m1, null), items[i].m2);
         }
     }
 
     @Override
     public void serializeToResValuesXml(XmlSerializer serializer,
                                         ResResource res) throws IOException, AndrolibException {
-      
-			
-		serializer.startTag(null, "style");
+        serializer.startTag(null, "style");
         serializer.attribute(null, "name", res.getResSpec().getName());
-        
-		
-		
-		if (!mParent.isNull())
-				serializer.attribute(null, "parent", mParent.encodeAsResXmlAttr());
-		else if (res.getResSpec().getName().indexOf('.') != -1)
+        if (!mParent.isNull() && !mParent.referentIsNull()) {
+            serializer.attribute(null, "parent", mParent.encodeAsResXmlAttr());
+        } else if (res.getResSpec().getName().indexOf('.') != -1) {
+            serializer.attribute(null, "parent", "");
+        }
+        for (int i = 0; i < mItems.length; i++) {
+            ResResSpec spec = mItems[i].m1.getReferent();
 
-           serializer.attribute(null, "parent", "");
-       
-		
-		
-		
-		
-        for (int i = 0; i < mItems.length; i++)
-		{
-			ResResSpec spec=null;
-            try
-			{
-				spec = mItems[i].m1.getReferent();
-			}
-			catch (AndrolibException e)
-			{
-				//MyData.Log("异常:"+e.toString() );
-			}
-			if(spec==null)
-			{
+            if (spec == null) {
+                LOGGER.fine(R.string.text, String.format("null reference: m1=0x%08x(%s), m2=0x%08x(%s)",
+										  mItems[i].m1.getRawIntValue(), mItems[i].m1.getType(), mItems[i].m2.getRawIntValue(), mItems[i].m2.getType()));
+                continue;
+            }
 
-				continue;
-			}
-			
             String name = null;
             String value = null;
-	String resource = null;
-	resource=spec.getDefaultResource().getValue().toString();
-	
-		
-			// hacky-fix remove bad ReferenceVars
-            if (resource.contains("ResReferenceValue@")) {
+
+            ResValue resource = spec.getDefaultResource().getValue();
+            if (resource instanceof ResReferenceValue) {
                 continue;
-            } else if (resource.contains("ResStringValue@") || resource.contains("ResStyleValue@") ||
-                    resource.contains("ResBoolValue@")) {
-                name = "@" + spec.getFullName(res.getResSpec().getPackage(), false);
-            } else {
-                ResAttr attr = (ResAttr) spec.getDefaultResource().getValue();
+            } else if (resource instanceof ResAttr) {
+                ResAttr attr = (ResAttr) resource;
                 value = attr.convertToResXmlFormat(mItems[i].m2);
                 name = spec.getFullName(res.getResSpec().getPackage(), true);
+            } else {
+                name = "@" + spec.getFullName(res.getResSpec().getPackage(), false);
             }
 
-		
             if (value == null) {
-				try
-				{
-					value = mItems[i].m2.encodeAsResXmlValue();
-				}
-				catch (AndrolibException e)
-				{
-				//	MyData.Log(e.toString());
-				//	continue;
-				value="@null";
-				}
-
-	
+                value = mItems[i].m2.encodeAsResXmlValue();
             }
-	
+
             if (value == null) {
                 continue;
             }
@@ -119,12 +87,11 @@ public class ResStyleValue extends ResBagValue implements
             serializer.attribute(null, "name", name);
             serializer.text(value);
             serializer.endTag(null, "item");
-		
         }
-		
-
         serializer.endTag(null, "style");
     }
 
     private final Duo<ResReferenceValue, ResScalarValue>[] mItems;
+
+    private final Logger LOGGER;
 }

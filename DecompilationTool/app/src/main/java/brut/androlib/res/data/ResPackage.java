@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,7 +14,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.data;
 
 import brut.androlib.AndrolibException;
@@ -22,8 +22,16 @@ import brut.androlib.res.data.value.ResFileValue;
 import brut.androlib.res.data.value.ResValueFactory;
 import brut.androlib.res.xml.ResValuesXmlSerializable;
 import brut.util.Duo;
-import java.util.*;
-import java.util.logging.Logger;
+import brut.util.Logger;
+import com.my.apktool.R;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
@@ -39,7 +47,8 @@ public class ResPackage {
 
     private ResValueFactory mValueFactory;
 
-    public ResPackage(ResTable resTable, int id, String name) {
+    public ResPackage(ResTable resTable, int id, String name, Logger logger) {
+		LOGGER = logger;
         this.mResTable = resTable;
         this.mId = id;
         this.mName = name;
@@ -101,7 +110,7 @@ public class ResPackage {
     public ResTypeSpec getType(String typeName) throws AndrolibException {
         ResTypeSpec type = mTypes.get(typeName);
         if (type == null) {
-            // throw new UndefinedResObject("t@ype: " + typeName);
+            throw new UndefinedResObject("type: " + typeName);
         }
         return type;
     }
@@ -172,7 +181,7 @@ public class ResPackage {
 
     public void addType(ResTypeSpec type) throws AndrolibException {
         if (mTypes.containsKey(type.getName())) {
-            LOGGER.warning("Multiple types detected! " + type + " ignored!");
+            LOGGER.warning(R.string.text, "Multiple types detected! " + type + " ignored!");
         } else {
             mTypes.put(type.getName(), type);
         }
@@ -221,10 +230,10 @@ public class ResPackage {
 
     public ResValueFactory getValueFactory() {
         if (mValueFactory == null) {
-            mValueFactory = new ResValueFactory(this);
+            mValueFactory = new ResValueFactory(this, LOGGER);
         }
         return mValueFactory;
     }
 
-    private final static Logger LOGGER = Logger.getLogger(ResPackage.class.getName());
+    private final Logger LOGGER;
 }

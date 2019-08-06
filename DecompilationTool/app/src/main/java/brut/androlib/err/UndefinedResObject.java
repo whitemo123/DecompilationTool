@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,12 +14,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.err;
 
-import brut.androlib.*;
-import brut.androlib.src.*;
-import java.util.logging.*;
+import brut.androlib.AndrolibException;
 
 /**
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
@@ -34,10 +32,8 @@ public class UndefinedResObject extends AndrolibException {
 
 	public UndefinedResObject(String message) {
 		super(message);
-		LOGGER.warning(message);
 	}
 
 	public UndefinedResObject() {
-	}private final static Logger LOGGER = Logger.getLogger(SmaliBuilder.class.getName());
-	
+	}
 }

@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,11 +14,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.util;
 
 import java.io.*;
-import org.xmlpull.mxp1_serializer.MXSerializer;
+import org.xmlpull.renamed.MXSerializer;
 
 /**
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
@@ -25,7 +25,7 @@ import org.xmlpull.mxp1_serializer.MXSerializer;
 public class ExtMXSerializer extends MXSerializer implements ExtXmlSerializer {
     @Override
     public void startDocument(String encoding, Boolean standalone)
-            throws IOException, IllegalArgumentException, IllegalStateException {
+	throws IOException, IllegalArgumentException, IllegalStateException {
         super.startDocument(encoding != null ? encoding : mDefaultEncoding, standalone);
         this.newLine();
     }
@@ -71,6 +71,11 @@ public class ExtMXSerializer extends MXSerializer implements ExtXmlSerializer {
     public void setDisabledAttrEscape(boolean disabled) {
         mIsDisabledAttrEscape = disabled;
     }
+
+	@Override
+	public void attrNewLine(boolean newLine) {
+		this.attrNewLine = newLine;
+	}
 
     private String mDefaultEncoding;
     private boolean mIsDisabledAttrEscape = false;

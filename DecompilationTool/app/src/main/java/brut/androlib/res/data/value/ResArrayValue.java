@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,16 +14,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.data.value;
 
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResResource;
 import brut.androlib.res.xml.ResValuesXmlSerializable;
 import brut.util.Duo;
+import brut.util.Logger;
 import java.io.IOException;
 import java.util.Arrays;
-
 import org.xmlpull.v1.XmlSerializer;
 
 /**
@@ -32,8 +32,8 @@ public class ResArrayValue extends ResBagValue implements
         ResValuesXmlSerializable {
     private String mRawItems;
 
-    ResArrayValue(ResReferenceValue parent, Duo<Integer, ResScalarValue>[] items) {
-        super(parent);
+    ResArrayValue(ResReferenceValue parent, Duo<Integer, ResScalarValue>[] items,Logger logger) {
+        super(parent,logger);
 
         mItems = new ResScalarValue[items.length];
         for (int i = 0; i < items.length; i++) {
@@ -41,8 +41,8 @@ public class ResArrayValue extends ResBagValue implements
         }
     }
 
-    public ResArrayValue(ResReferenceValue parent, ResScalarValue[] items) {
-        super(parent);
+    public ResArrayValue(ResReferenceValue parent, ResScalarValue[] items,Logger logger) {
+        super(parent,logger);
         mItems = items;
     }
 

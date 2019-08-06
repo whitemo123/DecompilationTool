@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,10 +14,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.directory;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.LinkedHashMap;
@@ -102,7 +103,6 @@ public abstract class AbstractDirectory implements Directory {
             return subpath.dir.getFileInput(subpath.path);
         }
         if (! getFiles().contains(subpath.path)) {
-			
             throw new PathNotExist(path);
         }
         return getFileInputLocal(subpath.path);
@@ -133,7 +133,7 @@ public abstract class AbstractDirectory implements Directory {
             return subpath.dir.getDir(subpath.path);
         }
         if (! getAbstractDirs().containsKey(subpath.path)) {
-          throw new PathNotExist(path);
+            throw new PathNotExist(path);
         }
         return getAbstractDirs().get(subpath.path);
     }
@@ -181,17 +181,17 @@ public abstract class AbstractDirectory implements Directory {
     }
 
     public void copyToDir(Directory out) throws DirectoryException {
-        DirUtil.copyToDir(out, out);
+        DirUtil.copyToDir(this, out);
     }
 
     public void copyToDir(Directory out, String[] fileNames)
             throws DirectoryException {
-        DirUtil.copyToDir(out, out, fileNames);
+        DirUtil.copyToDir(this, out, fileNames);
     }
 
     public void copyToDir(Directory out, String fileName)
             throws DirectoryException {
-        DirUtil.copyToDir(out, out, fileName);
+        DirUtil.copyToDir(this, out, fileName);
     }
 
     public void copyToDir(File out) throws DirectoryException {
@@ -236,14 +236,18 @@ public abstract class AbstractDirectory implements Directory {
         return dirs;
     }
 
+
+    public void close() throws IOException {
+
+    }
+
     private SubPath getSubPath(String path) throws PathNotExist {
         ParsedPath parsed = parsePath(path);
         if (parsed.dir == null) {
             return new SubPath(null, parsed.subpath);
         }
         if (! getAbstractDirs().containsKey(parsed.dir)) {
-	
-			throw new PathNotExist(path);
+            throw new PathNotExist(path);
         }
         return new SubPath(getAbstractDirs().get(parsed.dir), parsed.subpath);
     }

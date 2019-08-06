@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,10 +14,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.data.value;
 
 import brut.androlib.AndrolibException;
+import brut.androlib.err.UndefinedResObject;
 import brut.androlib.res.data.ResPackage;
 import brut.androlib.res.data.ResResSpec;
 
@@ -45,6 +46,9 @@ public class ResReferenceValue extends ResIntValue {
         }
 
         ResResSpec spec = getReferent();
+        if (spec == null) {
+            return "@null";
+        }
         boolean newId = spec.hasDefaultResource() && spec.getDefaultResource().getValue() instanceof ResIdValue;
 
         // generate the beginning to fix @android
@@ -54,10 +58,18 @@ public class ResReferenceValue extends ResIntValue {
     }
 
     public ResResSpec getReferent() throws AndrolibException {
-        return mPackage.getResTable().getResSpec(getValue());
+        try {
+            return mPackage.getResTable().getResSpec(getValue());
+        } catch (UndefinedResObject ex) {
+            return null;
+        }
     }
 
     public boolean isNull() {
         return mValue == 0;
+    }
+
+    public boolean referentIsNull() throws AndrolibException {
+        return getReferent() == null;
     }
 }

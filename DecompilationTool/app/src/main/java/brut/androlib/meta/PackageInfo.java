@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,8 +15,28 @@
  *  limitations under the License.
  */
 package brut.androlib.meta;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 public class PackageInfo {
     public String forcedPackageId;
     public String renameManifestPackage;
+
+	public static PackageInfo load(JSONObject json) throws JSONException {
+		if (json.isNull("PackageInfo"))
+			return null;
+		JSONObject pkg = json.getJSONObject("PackageInfo");
+		PackageInfo p = new PackageInfo();
+		p.forcedPackageId = MetaInfo.getString(pkg, "forcedPackageId");
+		p.renameManifestPackage = MetaInfo.getString(pkg, "renameManifestPackage");
+		return p;
+	}
+
+
+	public void save(JSONObject json) throws JSONException {
+		JSONObject pkg = new JSONObject();
+		MetaInfo.putString(pkg, "forcedPackageId", forcedPackageId);
+		MetaInfo.putString(pkg, "renameManifestPackage", renameManifestPackage);
+		json.put("PackageInfo", pkg);
+	}
 }

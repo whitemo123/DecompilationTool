@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,13 +14,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.data;
 
 import brut.androlib.AndrolibException;
 import brut.androlib.err.UndefinedResObject;
-import java.util.*;
-import org.apache.commons.lang3.StringUtils;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
+import brut.util.Logger;
 
 /**
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
@@ -30,12 +33,21 @@ public class ResResSpec {
     private final ResPackage mPackage;
     private final ResTypeSpec mType;
     private final Map<ResConfigFlags, ResResource> mResources = new LinkedHashMap<ResConfigFlags, ResResource>();
+	private final Logger logger;
 
-    public ResResSpec(ResID id, String name, ResPackage pkg, ResTypeSpec type) {
-		
-	
+    public ResResSpec(ResID id, String name, ResPackage pkg, ResTypeSpec type,Logger logger) {
+		this.logger=logger;
         this.mId = id;
-        this.mName = (name.isEmpty() ? ("APKTOOL_DUMMYVAL_" + id.toString()) : name);
+        String cleanName;
+
+        ResResSpec resResSpec = type.getResSpecUnsafe(name);
+        if (resResSpec != null) {
+            cleanName = name + "_APKTOOL_DUPLICATENAME_" + id.toString();
+        } else {
+            cleanName = (name.isEmpty() ? ("APKTOOL_DUMMYVAL_" + id.toString()) : name);
+        }
+        
+        this.mName = cleanName;
         this.mPackage = pkg;
         this.mType = type;
     }
@@ -65,11 +77,11 @@ public class ResResSpec {
     }
 
     public ResResource getDefaultResource() throws AndrolibException {
-        return getResource(new ResConfigFlags());
+        return getResource(new ResConfigFlags(logger));
     }
 
     public boolean hasDefaultResource() {
-        return mResources.containsKey(new ResConfigFlags());
+        return mResources.containsKey(new ResConfigFlags(logger));
     }
 
     public String getFullName() {

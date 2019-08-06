@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,14 +14,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.data;
 
-import brut.androlib.*;
-import brut.androlib.err.*;
-import brut.androlib.res.decoder.*;
+import brut.androlib.AndrolibException;
+import brut.androlib.err.UndefinedResObject;
 import java.util.*;
-import java.util.logging.*;
 
 /**
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
@@ -62,12 +60,8 @@ public class ResType {
         mResources.remove(spec);
     }
 
-    private static final Logger LOGGER = Logger.getLogger(ARSCDecoder.class.getName());
     public void addResource(ResResource res, boolean overwrite) throws AndrolibException {
-       
-		
-	
-		ResResSpec spec = res.getResSpec();
+        ResResSpec spec = res.getResSpec();
         if (mResources.put(spec, res) != null && !overwrite) {
             throw new AndrolibException(String.format("Multiple resources: spec=%s, config=%s", spec, this));
         }

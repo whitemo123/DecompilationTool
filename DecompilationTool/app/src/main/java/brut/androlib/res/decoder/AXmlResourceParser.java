@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,15 +19,17 @@ package brut.androlib.res.decoder;
 import android.content.res.XmlResourceParser;
 import android.util.TypedValue;
 import brut.androlib.AndrolibException;
+import brut.androlib.res.data.ResID;
 import brut.androlib.res.xml.ResXmlEncoders;
 import brut.util.ExtDataInput;
-import com.peterfranza.LittleEndianDataInputStream;
+import java.io.DataInput;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import brut.util.Logger;
 import org.xmlpull.v1.XmlPullParserException;
+import java.io.DataInputStream;
 
 /**
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
@@ -45,12 +48,13 @@ import org.xmlpull.v1.XmlPullParserException;
  */
 public class AXmlResourceParser implements XmlResourceParser {
 
-    public AXmlResourceParser() {
+    public AXmlResourceParser(Logger LOGGER) {
+		this.LOGGER = LOGGER;
         resetEventInfo();
     }
 
-    public AXmlResourceParser(InputStream stream) {
-        this();
+    public AXmlResourceParser(InputStream stream, Logger LOGGER) {
+        this(LOGGER);
         open(stream);
     }
 
@@ -69,7 +73,10 @@ public class AXmlResourceParser implements XmlResourceParser {
     public void open(InputStream stream) {
         close();
         if (stream != null) {
-            m_reader = new ExtDataInput(new LittleEndianDataInputStream(stream));
+            // We need to explicitly cast to DataInput as otherwise the constructor is ambiguous.
+            // We choose DataInput instead of InputStream as ExtDataInput wraps an InputStream in
+            // a DataInputStream which is big-endian and ignores the little-endian behavior.
+            m_reader = new ExtDataInput(new LittleEndianDataInput(stream));
         }
     }
 
@@ -140,9 +147,9 @@ public class AXmlResourceParser implements XmlResourceParser {
 
     @Override
     public void require(int type, String namespace, String name)
-            throws XmlPullParserException, IOException {
+	throws XmlPullParserException, IOException {
         if (type != getEventType() || (namespace != null && !namespace.equals(getNamespace()))
-                || (name != null && !name.equals(getName()))) {
+			|| (name != null && !name.equals(getName()))) {
             throw new XmlPullParserException(TYPES[type] + " is expected.", this, null);
         }
     }
@@ -283,21 +290,31 @@ public class AXmlResourceParser implements XmlResourceParser {
             return "";
         }
 
-        // hacky: if the attribute names are proguarded, then so are the namespace
-        // I don't know where these are located yet in the file, but it is always
-        // this.android_ns in testing, so we will default to that for now.
-        // @todo figure out where proguarded namespaces are stored.
+        // Minifiers like removing the namespace, so we will default to default namespace
+        // unless the pkgId of the resource is private. We will grab the non-standard one.
         String value = m_strings.getString(namespace);
 
         if (value.length() == 0) {
-            int offsetName = getAttributeOffset(index);
-            int name = m_attributes[offsetName + ATTRIBUTE_IX_NAME];
-            if (m_strings.getString(name).length() == 0) {
+            ResID resourceId = new ResID(getAttributeNameResource(index));
+            if (resourceId.package_ == PRIVATE_PKG_ID) {
+                value = getNonDefaultNamespaceUri();
+            } else {
                 value = android_ns;
             }
         }
 
         return value;
+    }
+
+    private String getNonDefaultNamespaceUri() {
+        int offset = m_namespaces.getCurrentCount() + 1;
+        String prefix = m_strings.getString(m_namespaces.get(offset, true));
+
+        if (! prefix.equalsIgnoreCase("android")) {
+            return  m_strings.getString(m_namespaces.get(offset, false));
+        }
+
+        return android_ns;
     }
 
     @Override
@@ -344,19 +361,7 @@ public class AXmlResourceParser implements XmlResourceParser {
         }
         return m_resourceIDs[name];
     }
-/*
-    @Override
-    public int getAttributeValueType(int index) {
-        int offset = getAttributeOffset(index);
-        return m_attributes[offset + ATTRIBUTE_IX_VALUE_TYPE];
-    }
 
-    @Override
-    public int getAttributeValueData(int index) {
-        int offset = getAttributeOffset(index);
-        return m_attributes[offset + ATTRIBUTE_IX_VALUE_DATA];
-    }
-*/
     @Override
     public String getAttributeValue(int index) {
         int offset = getAttributeOffset(index);
@@ -367,17 +372,17 @@ public class AXmlResourceParser implements XmlResourceParser {
         if (mAttrDecoder != null) {
             try {
                 return mAttrDecoder.decode(
-                        valueType,
-                        valueData,
-                        valueRaw == -1 ? null : ResXmlEncoders.escapeXmlChars(m_strings.getString(valueRaw)),
-                        getAttributeNameResource(index));
+					valueType,
+					valueData,
+					valueRaw == -1 ? null : ResXmlEncoders.escapeXmlChars(m_strings.getString(valueRaw)),
+					getAttributeNameResource(index));
             } catch (AndrolibException ex) {
                 setFirstError(ex);
                 LOGGER.log(Level.WARNING, String.format("Could not decode attr value, using undecoded value "
-                                + "instead: ns=%s, name=%s, value=0x%08x",
-                        getAttributePrefix(index),
-                        getAttributeName(index),
-                        valueData), ex);
+														+ "instead: ns=%s, name=%s, value=0x%08x",
+														getAttributePrefix(index),
+														getAttributeName(index),
+														valueData), ex);
             }
         }
         return TypedValue.coerceToString(valueType, valueData);
@@ -503,7 +508,7 @@ public class AXmlResourceParser implements XmlResourceParser {
     // ///////////////////////////////// dummies
     @Override
     public void setInput(InputStream stream, String inputEncoding)
-            throws XmlPullParserException {
+	throws XmlPullParserException {
         open(stream);
     }
 
@@ -534,7 +539,7 @@ public class AXmlResourceParser implements XmlResourceParser {
 
     @Override
     public void defineEntityReplacementText(String entityName, String replacementText)
-            throws XmlPullParserException {
+	throws XmlPullParserException {
         throw new XmlPullParserException(E_NOT_SUPPORTED);
     }
 
@@ -550,7 +555,7 @@ public class AXmlResourceParser implements XmlResourceParser {
 
     @Override
     public void setProperty(String name, Object value)
-            throws XmlPullParserException {
+	throws XmlPullParserException {
         throw new XmlPullParserException(E_NOT_SUPPORTED);
     }
 
@@ -561,7 +566,7 @@ public class AXmlResourceParser implements XmlResourceParser {
 
     @Override
     public void setFeature(String name, boolean value)
-            throws XmlPullParserException {
+	throws XmlPullParserException {
         throw new XmlPullParserException(E_NOT_SUPPORTED);
     }
 
@@ -815,7 +820,7 @@ public class AXmlResourceParser implements XmlResourceParser {
         int uri = (namespace != null) ? m_strings.find(namespace) : -1;
         for (int o = 0; o != m_attributes.length; o += ATTRIBUTE_LENGTH) {
             if (name == m_attributes[o + ATTRIBUTE_IX_NAME]
-                    && (uri == -1 || uri == m_attributes[o + ATTRIBUTE_IX_NAMESPACE_URI])) {
+				&& (uri == -1 || uri == m_attributes[o + ATTRIBUTE_IX_NAMESPACE_URI])) {
                 return o / ATTRIBUTE_LENGTH;
             }
         }
@@ -835,23 +840,16 @@ public class AXmlResourceParser implements XmlResourceParser {
 
     private final void doNext() throws IOException {
         // Delayed initialization.
-		
         if (m_strings == null) {
-		
             m_reader.skipCheckInt(CHUNK_AXML_FILE);
-	
+
 			/*
 			 * chunkSize
 			 */
             m_reader.skipInt();
-		
             m_strings = StringBlock.read(m_reader);
-	
-			
             m_namespaces.increaseDepth();
             m_operational = true;
-			
-	
         }
 
         if (m_event == END_DOCUMENT) {
@@ -891,7 +889,7 @@ public class AXmlResourceParser implements XmlResourceParser {
             }
 
             if (chunkType < CHUNK_XML_FIRST || chunkType > CHUNK_XML_LAST) {
-               // throw new IOException("Invalid chunk type (" + chunkType + ").");
+                throw new IOException("Invalid chunk type (" + chunkType + ").");
             }
 
             // Fake START_DOCUMENT event.
@@ -899,12 +897,10 @@ public class AXmlResourceParser implements XmlResourceParser {
                 m_event = START_DOCUMENT;
                 break;
             }
-		
+
             // Common header.
 			/* chunkSize */m_reader.skipInt();
             int lineNumber = m_reader.readInt();
-			
-
 			/* 0xFFFFFFFF */m_reader.skipInt();
 
             if (chunkType == CHUNK_XML_START_NAMESPACE || chunkType == CHUNK_XML_END_NAMESPACE) {
@@ -933,7 +929,7 @@ public class AXmlResourceParser implements XmlResourceParser {
                 m_styleAttribute = (m_classAttribute >>> 16) - 1;
                 m_classAttribute = (m_classAttribute & 0xFFFF) - 1;
                 m_attributes = m_reader.readIntArray(attributeCount * ATTRIBUTE_LENGTH);
-                for (int i = ATTRIBUTE_IX_VALUE_TYPE; i < m_attributes.length; ) {
+                for (int i = ATTRIBUTE_IX_VALUE_TYPE; i < m_attributes.length;) {
                     m_attributes[i] = (m_attributes[i] >>> 24);
                     i += ATTRIBUTE_LENGTH;
                 }
@@ -990,17 +986,19 @@ public class AXmlResourceParser implements XmlResourceParser {
     private int m_classAttribute;
     private int m_styleAttribute;
 
-    private final static Logger LOGGER = Logger.getLogger(AXmlResourceParser.class.getName());
+    private final Logger LOGGER ;
     private static final String E_NOT_SUPPORTED = "Method is not supported.";
     private static final int ATTRIBUTE_IX_NAMESPACE_URI = 0,
-            ATTRIBUTE_IX_NAME = 1, ATTRIBUTE_IX_VALUE_STRING = 2,
-            ATTRIBUTE_IX_VALUE_TYPE = 3, ATTRIBUTE_IX_VALUE_DATA = 4,
-            ATTRIBUTE_LENGTH = 5;
+	ATTRIBUTE_IX_NAME = 1, ATTRIBUTE_IX_VALUE_STRING = 2,
+	ATTRIBUTE_IX_VALUE_TYPE = 3, ATTRIBUTE_IX_VALUE_DATA = 4,
+	ATTRIBUTE_LENGTH = 5;
 
     private static final int CHUNK_AXML_FILE = 0x00080003,
-            CHUNK_RESOURCEIDS = 0x00080180, CHUNK_XML_FIRST = 0x00100100,
-            CHUNK_XML_START_NAMESPACE = 0x00100100,
-            CHUNK_XML_END_NAMESPACE = 0x00100101,
-            CHUNK_XML_START_TAG = 0x00100102, CHUNK_XML_END_TAG = 0x00100103,
-            CHUNK_XML_TEXT = 0x00100104, CHUNK_XML_LAST = 0x00100104;
+	CHUNK_RESOURCEIDS = 0x00080180, CHUNK_XML_FIRST = 0x00100100,
+	CHUNK_XML_START_NAMESPACE = 0x00100100,
+	CHUNK_XML_END_NAMESPACE = 0x00100101,
+	CHUNK_XML_START_TAG = 0x00100102, CHUNK_XML_END_TAG = 0x00100103,
+	CHUNK_XML_TEXT = 0x00100104, CHUNK_XML_LAST = 0x00100104;
+
+    private static final int PRIVATE_PKG_ID = 0x7F;
 }

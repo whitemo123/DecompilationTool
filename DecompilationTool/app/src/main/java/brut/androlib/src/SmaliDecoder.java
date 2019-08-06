@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,18 +14,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.src;
 
-import FormatFa.ApktoolHelper.*;
-import brut.androlib.*;
-import brut.common.*;
-import java.io.*;
-import java.util.logging.*;
-import org.jf.baksmali.*;
-import org.jf.dexlib2.*;
-import org.jf.dexlib2.analysis.*;
-import org.jf.dexlib2.dexbacked.*;
+import brut.androlib.AndrolibException;
+import org.jf.baksmali.Baksmali;
+import org.jf.baksmali.BaksmaliOptions;
+import org.jf.dexlib2.DexFileFactory;
+import org.jf.dexlib2.Opcodes;
+import org.jf.dexlib2.dexbacked.DexBackedDexFile;
+import org.jf.dexlib2.dexbacked.DexBackedOdexFile;
+import org.jf.dexlib2.analysis.InlineMethodResolver;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
@@ -46,32 +48,28 @@ public class SmaliDecoder {
 
     private void decode() throws AndrolibException {
         try {
-            baksmaliOptions options = new baksmaliOptions();
+            final BaksmaliOptions options = new BaksmaliOptions();
 
             // options
             options.deodex = false;
-            options.outputDirectory = mOutDir.toString();
-            options.noParameterRegisters = false;
-            options.useLocalsDirective = true;
-            options.useSequentialLabels = true;
-            options.outputDebugInfo = mBakDeb;
-            options.addCodeOffsets =false;
-            options.jobs = -1;
-            options.noAccessorComments = true;
+            options.implicitReferences = false;
+            options.parameterRegisters = true;
+            options.localsDirective = true;
+            options.sequentialLabels = true;
+            options.debugInfo = mBakDeb;
+            options.codeOffsets = false;
+            options.accessorComments = false;
             options.registerInfo = 0;
-            options.ignoreErrors = false;
             options.inlineResolver = null;
-            options.checkPackagePrivateAccess = false;
 
             // set jobs automatically
-            options.jobs = Runtime.getRuntime().availableProcessors();
-			
-            if (options.jobs > 6) {
-                options.jobs = 6;
+            int jobs = Runtime.getRuntime().availableProcessors();
+            if (jobs > 6) {
+                jobs = 6;
             }
 
             // create the dex
-            DexBackedDexFile dexFile = DexFileFactory.loadDexFile(mApkFile, mDexFile, mApi, false);
+            DexBackedDexFile dexFile = DexFileFactory.loadDexEntry(mApkFile, mDexFile, true, Opcodes.forApi(mApi));
 
             if (dexFile.isOdexFile()) {
                 throw new AndrolibException("Warning: You are disassembling an odex file without deodexing it.");
@@ -82,14 +80,11 @@ public class SmaliDecoder {
                         InlineMethodResolver.createInlineMethodResolver(((DexBackedOdexFile)dexFile).getOdexVersion());
             }
 
-            baksmali.disassembleDexFile(dexFile, options);
+            Baksmali.disassembleDexFile(dexFile, mOutDir, jobs, options);
         } catch (IOException ex) {
-			LOGGER.warning(ex.toString());
             throw new AndrolibException(ex);
         }
     }
-	private final static Logger LOGGER = Logger.getLogger(BrutException.class.getName());
-	
 
     private final File mApkFile;
     private final File mOutDir;

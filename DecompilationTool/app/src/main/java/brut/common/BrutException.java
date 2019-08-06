@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,46 +14,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.common;
 
 /**
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
- 
- 
- 
-import brut.androlib.*;
-import java.util.logging.*;
-import android.media.*;
-
-public class BrutException extends Exception
- {
+public class BrutException extends Exception {
     public BrutException(Throwable cause) {
         super(cause);
-		StringBuilder sb=new StringBuilder();
-StackTraceElement[] eles=cause.getStackTrace();
-for(StackTraceElement item:eles)
-{
-sb.append(	"At "+item.getFileName()+" in "+item.getLineNumber()+" error:"+item.getMethodName());
-	sb.append(item.toString());
-	sb.append("\n");
-	
-}
-		LOGGER.warning(sb.toString());
     }
-	private final static Logger LOGGER = Logger.getLogger(BrutException.class.getName());
-	
+
     public BrutException(String message, Throwable cause) {
         super(message, cause);
-	
-		LOGGER.warning(message);
-
     }
 
     public BrutException(String message) {
         super(message);
-		LOGGER.warning(message);
     }
 
     public BrutException() {

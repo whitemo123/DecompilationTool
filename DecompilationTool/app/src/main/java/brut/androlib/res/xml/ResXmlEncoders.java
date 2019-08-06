@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,13 +14,14 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.xml;
 
-import android.view.*;
-import brut.util.*;
-import java.util.*;
-import org.apache.commons.lang3.*;
+import brut.androlib.res.data.StringUtils;
+import brut.util.Duo;
+import java.util.ArrayList;
+import java.util.List;
+
+//import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
@@ -27,7 +29,7 @@ import org.apache.commons.lang3.*;
 public final class ResXmlEncoders {
 
     public static String escapeXmlChars(String str) {
-        return StringUtils.replace(StringUtils.replace(str, "&", "&amp;"), "<", "&lt;");
+		return StringUtils.replace(StringUtils.replace(str, "&", "&amp;"), "<", "&lt;");
     }
 
     public static String encodeAsResXmlAttr(String str) {
@@ -140,12 +142,12 @@ public final class ResXmlEncoders {
     }
 
     public static boolean hasMultipleNonPositionalSubstitutions(String str) {
-        Duo<List<Integer>, List<Integer>> tuple = findSubstitutions(str, 2);
+        Duo<List<Integer>, List<Integer>> tuple = findSubstitutions(str, 4);
         return ! tuple.m1.isEmpty() && tuple.m1.size() + tuple.m2.size() > 1;
     }
 
     public static String enumerateNonPositionalSubstitutionsIfRequired(String str) {
-        Duo<List<Integer>, List<Integer>> tuple = findSubstitutions(str, 2);
+        Duo<List<Integer>, List<Integer>> tuple = findSubstitutions(str, 4);
         if (tuple.m1.isEmpty() || tuple.m1.size() + tuple.m2.size() < 2) {
             return str;
         }
@@ -178,7 +180,7 @@ public final class ResXmlEncoders {
         List<Integer> positional = new ArrayList<>();
 
         if (str == null) {
-            return new Duo<>(nonPositional, positional);
+            return new Duo<List<Integer>, List<Integer>>(nonPositional, positional);
         }
 
         int length = str.length();
@@ -207,12 +209,12 @@ public final class ResXmlEncoders {
             }
         }
 
-        return new Duo<>(nonPositional, positional);
+        return new Duo<List<Integer>, List<Integer>>(nonPositional, positional);
     }
 
     private static boolean isPrintableChar(char c) {
         Character.UnicodeBlock block = Character.UnicodeBlock.of(c);
-        return !Character.isISOControl(c) 
-                && block != null && block != Character.UnicodeBlock.SPECIALS;
+        return !Character.isISOControl(c) && c != Character.MAX_VALUE
+			&& block != null && block != Character.UnicodeBlock.SPECIALS;
     }
 }

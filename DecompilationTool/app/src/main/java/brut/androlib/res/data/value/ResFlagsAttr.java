@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,12 +14,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.data.value;
 
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResResource;
 import brut.util.Duo;
+import brut.util.Logger;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -29,8 +30,8 @@ import org.xmlpull.v1.XmlSerializer;
  */
 public class ResFlagsAttr extends ResAttr {
     ResFlagsAttr(ResReferenceValue parent, int type, Integer min, Integer max,
-                 Boolean l10n, Duo<ResReferenceValue, ResIntValue>[] items) {
-        super(parent, type, min, max, l10n);
+                 Boolean l10n, Duo<ResReferenceValue, ResIntValue>[] items, Logger logger) {
+        super(parent, type, min, max, l10n, logger);
 
         mItems = new FlagItem[items.length];
         for (int i = 0; i < items.length; i++) {
@@ -40,8 +41,8 @@ public class ResFlagsAttr extends ResAttr {
 
     @Override
     public String convertToResXmlFormat(ResScalarValue value)
-            throws AndrolibException {
-        if(value instanceof ResReferenceValue) {
+	throws AndrolibException {
+        if (value instanceof ResReferenceValue) {
             return value.encodeAsResXml();
         }
         if (!(value instanceof ResIntValue)) {
@@ -75,14 +76,14 @@ public class ResFlagsAttr extends ResAttr {
 
     @Override
     protected void serializeBody(XmlSerializer serializer, ResResource res)
-            throws AndrolibException, IOException {
+	throws AndrolibException, IOException {
         for (int i = 0; i < mItems.length; i++) {
             FlagItem item = mItems[i];
 
             serializer.startTag(null, "flag");
             serializer.attribute(null, "name", item.getValue());
             serializer.attribute(null, "value",
-                    String.format("0x%08x", item.flag));
+								 String.format("0x%08x", item.flag));
             serializer.endTag(null, "flag");
         }
     }
@@ -130,12 +131,12 @@ public class ResFlagsAttr extends ResAttr {
         mFlags = Arrays.copyOf(flags, flagsCount);
 
         Arrays.sort(mFlags, new Comparator<FlagItem>() {
-            @Override
-            public int compare(FlagItem o1, FlagItem o2) {
-                return Integer.valueOf(Integer.bitCount(o2.flag)).compareTo(
+				@Override
+				public int compare(FlagItem o1, FlagItem o2) {
+					return Integer.valueOf(Integer.bitCount(o2.flag)).compareTo(
                         Integer.bitCount(o1.flag));
-            }
-        });
+				}
+			});
     }
 
     private final FlagItem[] mItems;

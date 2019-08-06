@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,13 +14,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.data.value;
 
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResResource;
 import brut.androlib.res.xml.ResValuesXmlSerializable;
 import brut.util.Duo;
+import brut.util.Logger;
 import java.io.IOException;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -28,9 +29,11 @@ import org.xmlpull.v1.XmlSerializer;
  */
 public class ResBagValue extends ResValue implements ResValuesXmlSerializable {
     protected final ResReferenceValue mParent;
+	private final Logger logger;
 
-    public ResBagValue(ResReferenceValue parent) {
+    public ResBagValue(ResReferenceValue parent, Logger logger) {
         this.mParent = parent;
+		this.logger = logger;
     }
 
     @Override
@@ -38,18 +41,18 @@ public class ResBagValue extends ResValue implements ResValuesXmlSerializable {
                                         ResResource res) throws IOException, AndrolibException {
         String type = res.getResSpec().getType().getName();
         if ("style".equals(type)) {
-            new ResStyleValue(mParent, new Duo[0], null)
-                    .serializeToResValuesXml(serializer, res);
+            new ResStyleValue(mParent, new Duo[0], null, logger)
+				.serializeToResValuesXml(serializer, res);
             return;
         }
         if ("array".equals(type)) {
-            new ResArrayValue(mParent, new Duo[0]).serializeToResValuesXml(
-                    serializer, res);
+            new ResArrayValue(mParent, new Duo[0], logger).serializeToResValuesXml(
+				serializer, res);
             return;
         }
         if ("plurals".equals(type)) {
-            new ResPluralsValue(mParent, new Duo[0]).serializeToResValuesXml(
-                    serializer, res);
+            new ResPluralsValue(mParent, new Duo[0], logger).serializeToResValuesXml(
+				serializer, res);
             return;
         }
 

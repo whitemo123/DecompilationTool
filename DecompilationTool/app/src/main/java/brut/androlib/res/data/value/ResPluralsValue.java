@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,7 +14,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.data.value;
 
 import brut.androlib.AndrolibException;
@@ -21,6 +21,7 @@ import brut.androlib.res.data.ResResource;
 import brut.androlib.res.xml.ResValuesXmlSerializable;
 import brut.androlib.res.xml.ResXmlEncoders;
 import brut.util.Duo;
+import brut.util.Logger;
 import java.io.IOException;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -28,10 +29,10 @@ import org.xmlpull.v1.XmlSerializer;
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public class ResPluralsValue extends ResBagValue implements
-        ResValuesXmlSerializable {
+ResValuesXmlSerializable {
     ResPluralsValue(ResReferenceValue parent,
-                    Duo<Integer, ResScalarValue>[] items) {
-        super(parent);
+                    Duo<Integer, ResScalarValue>[] items,Logger logger) {
+        super(parent,logger);
 
         mItems = new ResScalarValue[6];
         for (int i = 0; i < items.length; i++) {
@@ -50,11 +51,9 @@ public class ResPluralsValue extends ResBagValue implements
                 continue;
             }
 
-            ResScalarValue rawValue = item;
-
             serializer.startTag(null, "item");
             serializer.attribute(null, "quantity", QUANTITY_MAP[i]);
-            serializer.text(ResXmlEncoders.enumerateNonPositionalSubstitutionsIfRequired(item.encodeAsResXmlValue()));
+            serializer.text(ResXmlEncoders.enumerateNonPositionalSubstitutionsIfRequired(item.encodeAsResXmlNonEscapedItemValue()));
             serializer.endTag(null, "item");
         }
         serializer.endTag(null, "plurals");

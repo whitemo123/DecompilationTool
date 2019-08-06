@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,14 +14,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.util;
 
 import brut.common.BrutException;
-import java.io.*;
-import java.util.Arrays;
-import java.util.logging.Logger;
-
+import brut.util.Logger;
+import com.my.apktool.R;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -28,9 +38,7 @@ import org.apache.commons.io.IOUtils;
  */
 public class OS {
 
-    private static final Logger LOGGER = Logger.getLogger("");
-
-    public static void rmdir(File dir) throws BrutException {
+    public static void rmdir(File dir) {
         if (! dir.exists()) {
             return;
         }
@@ -45,8 +53,8 @@ public class OS {
         }
         dir.delete();
     }
-        
-    public static void rmfile(String file) throws BrutException {
+
+    public static void rmfile(String file) {
     	File del = new File(file);
     	del.delete();
     }
@@ -61,7 +69,7 @@ public class OS {
         for (int i = 0; i < files.length; i++) {
             File file = files[i];
             File destFile = new File(dest.getPath() + File.separatorChar
-                + file.getName());
+									 + file.getName());
             if (file.isDirectory()) {
                 cpdir(file, destFile);
                 continue;
@@ -82,27 +90,33 @@ public class OS {
         cpdir(new File(src), new File(dest));
     }
 
-    public static void exec(String[] cmd) throws BrutException {
-        Process ps = null;
-        int exitValue = -99;
+    public static String execAndReturn(String[] cmd) {
+        ExecutorService executor = Executors.newCachedThreadPool();
         try {
             ProcessBuilder builder = new ProcessBuilder(cmd);
-            ps = builder.start();
-            new StreamForwarder(ps.getErrorStream(), "ERROR").start();
-            new StreamForwarder(ps.getInputStream(), "OUTPUT").start();
-            exitValue = ps.waitFor();
-            if (exitValue != 0)
-                throw new BrutException("could not exec (exit code = " + exitValue + "): " + Arrays.toString(cmd));
-        } catch (IOException ex) {
-            throw new BrutException("could not exec: " + Arrays.toString(cmd), ex);
-        } catch (InterruptedException ex) {
-            throw new BrutException("could not exec : " + Arrays.toString(cmd), ex);
+            builder.redirectErrorStream(true);
+
+            Process process = builder.start();
+            StreamCollector collector = new StreamCollector(process.getInputStream());
+            executor.execute(collector);
+
+            process.waitFor();
+            if (! executor.awaitTermination(15, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+                if (! executor.awaitTermination(5, TimeUnit.SECONDS)) {
+                    System.err.println("Stream collector did not terminate.");
+                }
+            }
+            return collector.get();
+        } catch (IOException | InterruptedException e) {
+            return null;
         }
     }
 
     public static File createTempDirectory() throws BrutException {
         try {
             File tmp = File.createTempFile("BRUT", null);
+            tmp.deleteOnExit();
             if (!tmp.delete()) {
                 throw new BrutException("Could not delete tmp file: " + tmp.getAbsolutePath());
             }
@@ -115,13 +129,30 @@ public class OS {
         }
     }
 
-    static class StreamForwarder extends Thread {
+    public static void exec(List<String> cmd, Logger LOGGER) throws BrutException {
+        Process ps = null;
+        int exitValue = -99;
+        try {
+            ProcessBuilder builder = new ProcessBuilder(cmd);
+            ps = builder.start();
+            new StreamForwarder(ps.getErrorStream(), "ERROR", LOGGER).start();
+            new StreamForwarder(ps.getInputStream(), "OUTPUT", LOGGER).start();
+            exitValue = ps.waitFor();
+            if (exitValue != 0)
+                throw new BrutException("could not exec (exit code = " + exitValue + "): " + cmd);
+        } catch (IOException ex) {
+            throw new BrutException("could not exec: " + cmd, ex);
+        } catch (InterruptedException ex) {
+            throw new BrutException("could not exec : " + cmd, ex);
+        }
+    }
 
-        StreamForwarder(InputStream is, String type) {
+    static class StreamForwarder extends Thread {
+        StreamForwarder(InputStream is, String type, Logger LOGGER) {
             mIn = is;
             mType = type;
+			this.LOGGER = LOGGER;
         }
-
         @Override
         public void run() {
             try {
@@ -129,9 +160,9 @@ public class OS {
                 String line;
                 while ((line = br.readLine()) != null) {
                     if (mType.equals("OUTPUT")) {
-                        LOGGER.info(line);
+                        LOGGER.info(R.string.text, line);
                     } else {
-                        LOGGER.warning(line);
+                        LOGGER.warning(R.string.text, line);
                     }
                 }
             } catch (IOException ex) {
@@ -141,5 +172,32 @@ public class OS {
 
         private final InputStream mIn;
         private final String mType;
+		private final Logger LOGGER;
+    }
+
+    static class StreamCollector implements Runnable {
+        private final StringBuffer buffer = new StringBuffer();
+        private final InputStream inputStream;
+
+        public StreamCollector(InputStream inputStream) {
+            super();
+            this.inputStream = inputStream;
+        }
+
+        @Override
+        public void run() {
+            String line;
+            try {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line).append('\n');
+                }
+				reader.close();
+            } catch (IOException ignored) {}
+        }
+
+        public String get() {
+            return buffer.toString();
+        }
     }
 }

@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2018 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,28 +14,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.directory;
 
-import brut.androlib.src.*;
-import brut.common.*;
-import java.util.logging.*;
+import brut.common.BrutException;
 
 public class DirectoryException extends BrutException {
     private static final long serialVersionUID = -8871963042836625387L;
-;
+
     public DirectoryException(String detailMessage, Throwable throwable) {
         super(detailMessage, throwable);
     }
 
     public DirectoryException(String detailMessage) {
-        super("Dir:"+detailMessage);
-		
+        super(detailMessage);
     }
 
     public DirectoryException(Throwable throwable) {
         super(throwable);
-		
     }
 
     public DirectoryException() {
