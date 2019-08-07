@@ -2,12 +2,20 @@ package com.my.apktool;
 import android.support.v7.app.*;
 import android.os.*;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.RecyclerView;
+import java.util.*;
+import java.io.*;
+import com.my.apktool.Adapter.*;
+import android.widget.*;
 
 public class phoneStorageActivity extends AppCompatActivity
 {
 	Toolbar toolbar;
-	RecyclerView recyclerview;
+	ListView recyclerview;
+	List<File> data = new ArrayList<File>();
+	String rootpath;
+	File[] files;
+	Stack<String> nowPathStack;
+	phoneStorageFileAdapter fileAdapter;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -25,11 +33,23 @@ public class phoneStorageActivity extends AppCompatActivity
 	{
 		// TODO: Implement this method
 		toolbar = (Toolbar) findViewById(R.id.phonestorage_toolbar);
-		recyclerview = (RecyclerView) findViewById(R.id.phonestorage_recyclerview);
+		recyclerview = (ListView) findViewById(R.id.phonestorage_listview);
 	}
 	
 	private void Initialization()
 	{
 		setSupportActionBar(toolbar);
+		rootpath = Environment.getExternalStorageDirectory().toString();
+        nowPathStack = new Stack<>();
+		files = Environment.getExternalStorageDirectory()
+			.listFiles();
+		nowPathStack.push(rootpath);
+        for (File f : files)
+		{
+			data.add(f);
+		}
+		
+		fileAdapter = new phoneStorageFileAdapter(phoneStorageActivity.this,data);
+		recyclerview.setAdapter(fileAdapter);
 	}
 }
