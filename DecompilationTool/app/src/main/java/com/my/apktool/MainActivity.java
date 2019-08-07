@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.GridLayoutManager;
 import java.util.*;
 import com.my.apktool.Adapter.*;
+import android.content.*;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity
 					{
 						case R.id.side_phone_storage:
 							//跳转去手机存储
+							startActivity(new Intent(MainActivity.this,phoneStorageActivity.class));
 							break;
 							
 						case R.id.side_sd_storage:

@@ -30,6 +30,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.my.apktool.phoneStorageActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

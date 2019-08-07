@@ -38,6 +38,10 @@
 
 		</activity>
 
+		<activity
+			android:name=".phoneStorageActivity"
+			android:theme="@style/AppTheme.NoActionBar"/>
+
 	</application>
 
 </manifest>

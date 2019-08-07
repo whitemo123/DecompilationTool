@@ -1,6 +1,31 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
-    
-</LinearLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:fitsSystemWindows="true"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<android.support.design.widget.AppBarLayout
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:theme="@style/AppTheme.AppBarOverlay">
+
+		<android.support.v7.widget.Toolbar
+			android:layout_width="match_parent"
+			android:background="@color/colorPrimaryDark"
+			android:layout_height="56dp"
+			app:popupTheme="@style/AppTheme.PopupOverlay"
+			android:textColor="#ffffff"
+			android:id="@+id/phonestorage_toolbar"/>
+
+	</android.support.design.widget.AppBarLayout>
+
+	<android.support.v7.widget.RecyclerView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/phonestorage_recyclerview"/>
+
+</android.support.design.widget.CoordinatorLayout>
+
