@@ -21,6 +21,29 @@ public class phoneStorageFileAdapter extends BaseAdapter
 		this.data = data;
 	}
 	
+	public File[]  setfiledata(List<File> data) 
+	{
+        this.data = data;
+        sort();
+        this.notifyDataSetChanged();
+        File[] files = new File[data.size()];
+        for (int i = 0;i<files.length;i++) 
+		{
+            files[i] = data.get(i);
+        }
+        return files;
+    }
+
+    public File[]  setfiledata() 
+	{
+        File[] files = new File[data.size()];
+        for (int i = 0;i<files.length;i++) 
+		{
+            files[i] = data.get(i);
+        }
+        return files;
+    }
+	
 	int sortWay = FileSortFactory.SORT_BY_FOLDER_AND_NAME;
 
 
@@ -84,7 +107,7 @@ public class phoneStorageFileAdapter extends BaseAdapter
 		if(file.isDirectory())
 		{
 			myViewHolder.iv1.setImageResource(R.drawable.folder);
-			myViewHolder.tv3.setVisibility(View.GONE);
+			myViewHolder.tv3.setText("");
 		}
 		else
 		{
@@ -92,7 +115,7 @@ public class phoneStorageFileAdapter extends BaseAdapter
 			myViewHolder.tv3.setText(generateSize(file));
 		}
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		myViewHolder.tv1.setText(file.getName());
 		myViewHolder.tv2.setText(dateFormat.format(new Date(file.lastModified())));
 		return p2;
@@ -116,21 +139,18 @@ public class phoneStorageFileAdapter extends BaseAdapter
 	
 	private String generateSize(File file)
 	{
-        if (file.isFile()) 
-		{
-            long result = file.length();
-            long gb = 2 << 29;
-            long mb = 2 << 19;
-            long kb = 2 << 9;
-            if (result < kb)
-                return result + "B";
-            else if (result >= kb && result < mb)
-				return String.format("%.2fKB", result / (double) kb);
-            else if (result >= mb && result < gb)
-                return String.format("%.2fMB", result / (double) mb);
-            else if (result >= gb)
-                return String.format("%.2fGB", result / (double) gb);
-        }
-        return null;
-    }
+        long result = file.length();
+		long gb = 2 << 29;
+		long mb = 2 << 19;
+		long kb = 2 << 9;
+		if (result < kb)
+			return result + "B";
+		else if (result >= kb && result < mb)
+			return String.format("%.2fKB", result / (double) kb);
+		else if (result >= mb && result < gb)
+			return String.format("%.2fMB", result / (double) mb);
+		else if (result >= gb)
+			return String.format("%.2fGB", result / (double) gb);
+		return null;
+	}
 }
