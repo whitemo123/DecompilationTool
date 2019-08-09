@@ -8,17 +8,20 @@ import com.my.apktool.Utils.*;
 import java.io.*;
 import java.util.*;
 import java.text.*;
+import android.view.View.*;
 
 public class phoneStorageFileAdapter extends BaseAdapter
 {
 	
 	List<File> data;
 	Context mcontext;
+	OnClickListener onClickListener;
 	
-	public phoneStorageFileAdapter(Context mcontext,List<File> data)
+	public phoneStorageFileAdapter(Context mcontext,List<File> data,OnClickListener onClickListener)
 	{
 		this.mcontext = mcontext;
 		this.data = data;
+		this.onClickListener = onClickListener;
 	}
 	
 	public File[]  setfiledata(List<File> data) 
@@ -134,6 +137,9 @@ public class phoneStorageFileAdapter extends BaseAdapter
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		myViewHolder.tv1.setText(file.getName());
 		myViewHolder.tv2.setText(dateFormat.format(new Date(file.lastModified())));
+		
+		myViewHolder.iv2.setTag(p1);
+		myViewHolder.iv2.setOnClickListener(this.onClickListener);
 		return p2;
 	}
 

@@ -56,7 +56,7 @@ public class phoneStorageActivity extends AppCompatActivity
 		}
 		Collections.sort(this.data, FileSortFactory.getWebFileQueryMethod(sortWay));
 		
-		fileAdapter = new phoneStorageFileAdapter(phoneStorageActivity.this,data);
+		fileAdapter = new phoneStorageFileAdapter(phoneStorageActivity.this,data,onClickListener);
 		recyclerview.setAdapter(fileAdapter);
 		
 		recyclerview.setOnItemClickListener(new OnItemClickListener(){
@@ -118,4 +118,16 @@ public class phoneStorageActivity extends AppCompatActivity
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	private OnClickListener onClickListener = new OnClickListener(){
+
+		@Override
+		public void onClick(View p1)
+		{
+			// TODO: Implement this method
+			ImageView iv2 = (ImageView) p1;
+			int pos = (Integer) iv2.getTag();
+			Toast.makeText(phoneStorageActivity.this,""+data.get(pos).getName(),3000).show();
+		}
+	};
 }

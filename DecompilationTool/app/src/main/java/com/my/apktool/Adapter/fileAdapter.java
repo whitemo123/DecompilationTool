@@ -43,10 +43,19 @@ public class fileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 	public void onBindViewHolder(RecyclerView.ViewHolder p1, int p2)
 	{
 		// TODO: Implement this method
-		fileData mobai = data.get(p2);
+		final fileData mobai = data.get(p2);
 		((MyViewHolder) p1).tv1.setText(mobai.getFileName());
 		((MyViewHolder)p1).tv2.setText(""+mobai.getFileTime());
 		((MyViewHolder)p1).iv1.setImageResource(mobai.getApkIcon());
+		((MyViewHolder)p1).iv2.setOnClickListener(new OnClickListener(){
+
+				@Override
+				public void onClick(View p1)
+				{
+					// TODO: Implement this method
+					Toast.makeText(mcontext,"你猜"+mobai.getFileName(),3000).show();
+				}
+				});
 	}
 
 	@Override
