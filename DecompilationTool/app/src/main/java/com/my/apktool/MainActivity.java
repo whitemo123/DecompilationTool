@@ -13,6 +13,7 @@ import android.support.v7.widget.GridLayoutManager;
 import java.util.*;
 import com.my.apktool.Adapter.*;
 import android.content.*;
+import android.support.v4.view.*;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity
 							
 						default:break;
 					}
+					drawerLayout.closeDrawer(GravityCompat.START);
 					return true;
 				}
 				});

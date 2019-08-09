@@ -111,7 +111,23 @@ public class phoneStorageFileAdapter extends BaseAdapter
 		}
 		else
 		{
-			myViewHolder.iv1.setImageResource(R.drawable.android);
+			String resd = file.toString();
+			if(resd.endsWith(".apk"))
+			{
+				myViewHolder.iv1.setImageResource(R.drawable.apk);
+			}
+			else if(resd.endsWith(".xml"))
+			{
+				myViewHolder.iv1.setImageResource(R.drawable.xml);
+			}
+			else if(resd.endsWith(".dex"))
+			{
+				myViewHolder.iv1.setImageResource(R.drawable.dex);
+			}
+			else
+			{
+				myViewHolder.iv1.setImageResource(R.drawable.android);
+			}
 			myViewHolder.tv3.setText(generateSize(file));
 		}
 		

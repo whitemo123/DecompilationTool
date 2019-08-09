@@ -105,8 +105,15 @@ public class phoneStorageActivity extends AppCompatActivity
 		// TODO: Implement this method
 		if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN)
 		{
-			nowPathStack.pop();
-			showChanges(getPathString());
+			if(getPathString().equals(rootpath))
+			{
+				phoneStorageActivity.this.finish();
+			}
+			else
+			{
+				nowPathStack.pop();
+				showChanges(getPathString());
+			}
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
