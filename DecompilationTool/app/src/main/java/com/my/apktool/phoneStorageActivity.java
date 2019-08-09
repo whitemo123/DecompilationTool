@@ -65,6 +65,7 @@ public class phoneStorageActivity extends AppCompatActivity
 				public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4)
 				{
 					// TODO: Implement this method
+					
 					File file = files[p3];
 					if(file.isDirectory())
 					{
